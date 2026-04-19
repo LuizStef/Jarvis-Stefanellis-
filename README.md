@@ -1,4 +1,4 @@
-Jarvis Stefanellis
+Project Jarvis
 
 Personal Offline AI Assistant designed to learn, adapt and evolve with its user.
 
