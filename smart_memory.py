@@ -37,20 +37,3 @@ class SmartMemory:
     def search_memory(self, keyword):
         self.__cursor.execute("SELECT role, content, timestamp FROM messages WHERE content LIKE ?",(f"%{keyword}%",))
         return self.__cursor.fetchall()
-
-
-memory = SmartMemory()
-memory.save_memory("user", "Hello Jarvis!")
-memory.save_memory("jarvis", "I don't know the anser yet.")
-
-history = memory.load_history()
-for row in history:
-    print(row)
-
-# test search
-results = memory.search_memory("Hello")
-print("Search results:", results)
-
-# test clear
-memory.clear_history()
-print("History after clear:", memory.load_history())
