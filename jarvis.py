@@ -1,6 +1,7 @@
 from base import Assistant
 from soul import Soul
 from smart_memory import SmartMemory
+from core import Core
 
 class Jarvis(Assistant):
     def __init__(self, username):
@@ -8,6 +9,7 @@ class Jarvis(Assistant):
         self.__mood = "neutral"
         self.soul = Soul(username, "casual")
         self.memory = SmartMemory()
+        self.core = Core()
 
     def get_mood(self):
         return self.__mood
@@ -20,7 +22,8 @@ class Jarvis(Assistant):
 
     def respond(self, message):
         self.memory.save_memory("user", message)
-        response = "I don't know the answer to that yet."
+        history = self.memory.load_history() 
+        response = self.core.think(message, history)
         self.memory.save_memory("jarvis", response)
         print(f"[{self.name}]: {response}")
 
