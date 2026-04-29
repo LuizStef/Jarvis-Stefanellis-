@@ -37,3 +37,17 @@ class SmartMemory:
     def search_memory(self, keyword):
         self.__cursor.execute("SELECT role, content, timestamp FROM messages WHERE content LIKE ?",(f"%{keyword}%",))
         return self.__cursor.fetchall()
+    
+    def save_user(self, name):
+        self.__cursor.execute("CREATE TABLE IF NOT EXISTS user (name TEXT)")
+        self.__cursor.execute("DELETE FROM user")
+        self.__cursor.execute("INSERT INTO user (name) VALUES (?)", (name,))
+        self.__conn.commit()
+    
+    def load_user(self):
+        try:
+            self.__cursor.execute("SELECT name FROM user")
+            result = self.__cursor.fetchone()
+            return result[0] if result else None
+        except:
+            return None

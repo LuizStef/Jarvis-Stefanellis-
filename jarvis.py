@@ -27,9 +27,14 @@ class Jarvis(Assistant):
         self.memory.save_memory("jarvis", response)
         print(f"[{self.name}]: {response}")
 
+memory = SmartMemory()
+username = memory.load_user()
 
+if not username:
+    username = input("Hello! What's your name? ")
+    memory.save_user(username)
 
-jarvis = Jarvis("User")
+jarvis = Jarvis(username)
 jarvis.soul.greet()
 jarvis.introduce()
 
