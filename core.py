@@ -12,15 +12,19 @@ class Core:
         Always respond concisely and directly."""
         
     def think(self, message, history=[]):
-        messages = [{"role": "system", "content": self.__system_prompt}]
-        for role, content, _ in history:
-            messages.append({"role": role, "content": content})
-        messages.append({"role": "user", "content": message})
+        try:
+            messages = [{"role": "system", "content": self.__system_prompt}]
+            for role, content, _ in history:
+                messages.append({"role": role, "content": content})
+            messages.append({"role": "user", "content": message})
         
-        response = ollama.chat(
-            model=self.__model,
-            messages=messages
-        )
+            response = ollama.chat(
+                model=self.__model,
+             messages=messages
+            )
         
-        return response["message"]["content"]
+            return response["message"]["content"]
+    
+        except Exception as e:
+            return f"[ERROR]: I'm offline or something went wrong. ({e})"
     
