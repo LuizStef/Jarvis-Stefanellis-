@@ -1,5 +1,6 @@
 import ollama
 from datetime import datetime
+from exceptions import JarvisOfflineError
 
 class Core:
     def __init__(self):
@@ -26,5 +27,4 @@ class Core:
             return response["message"]["content"]
     
         except Exception as e:
-            return f"[ERROR]: I'm offline or something went wrong. ({e})"
-    
+            raise JarvisOfflineError()

@@ -2,6 +2,7 @@ from base import Assistant
 from soul import Soul
 from smart_memory import SmartMemory
 from core import Core
+from exceptions import InvalidMoodError, JarvisOfflineError
 
 class Jarvis(Assistant):
     def __init__(self, username):
@@ -18,7 +19,7 @@ class Jarvis(Assistant):
         if value in ["neutral", "excited", "tired"]:
             self.__mood = value
         else:
-            print("Invalid mood.")
+            raise InvalidMoodError(value)
 
     def respond(self, message):
         self.memory.save_memory("user", message)
@@ -48,4 +49,7 @@ while True:
     if message.lower() == "exit":
         print(f"[{jarvis.name}]: Goodbye!")
         break
-    jarvis.respond(message) 
+    try:
+        jarvis.respond(message)
+    except JarvisOfflineError:
+        print(f"[Jarvis]: I'm offline. Please start Ollama and try again.")
