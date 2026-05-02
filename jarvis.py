@@ -4,6 +4,12 @@ from smart_memory import SmartMemory
 from core import Core
 from exceptions import InvalidMoodError, JarvisOfflineError
 
+def log_action(func):
+    def wrapper(*args, **kwargs):
+        print(f"[LOG] {func.__name__} called")
+        return func(*args, **kwargs)
+    return wrapper
+
 class Jarvis(Assistant):
     def __init__(self, username):
         super().__init__("Jarvis", "0.1")
@@ -21,6 +27,7 @@ class Jarvis(Assistant):
         else:
             raise InvalidMoodError(value)
 
+    @log_action
     def respond(self, message):
         self.memory.save_memory("user", message)
         history = self.memory.load_history() 
@@ -49,7 +56,20 @@ while True:
     if message.lower() == "exit":
         print(f"[{jarvis.name}]: Goodbye!")
         break
-    try:
-        jarvis.respond(message)
-    except JarvisOfflineError:
-        print(f"[Jarvis]: I'm offline. Please start Ollama and try again.")
+    
+    elif message.lower() == "!clear":
+        jarvis.memory.clear_history()
+        print("[System]: Memory cleared.")
+        
+    elif message.lower() == "!history":
+        for row in jarvis.memory.load_history():
+            print(row)
+            
+    elif message.lower() == "!mood":
+        print(f"[System]: Current mood: {jarvis.get_mood()}")
+        
+    else:
+        try:
+             jarvis.respond(message)
+        except JarvisOfflineError:
+            print(f"[Jarvis]: I'm offline. Please start Ollama and try again.")
