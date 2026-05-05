@@ -3,6 +3,7 @@ from soul import Soul
 from smart_memory import SmartMemory
 from core import Core
 from exceptions import InvalidMoodError, JarvisOfflineError
+from semantic_memory import SemanticMemory
 
 def log_action(func):
     def wrapper(*args, **kwargs):
@@ -16,6 +17,7 @@ class Jarvis(Assistant):
         self.__mood = "neutral"
         self.soul = Soul(username, "casual")
         self.memory = SmartMemory()
+        self.semantic = SemanticMemory()
         self.core = Core()
 
     def get_mood(self):
@@ -30,6 +32,8 @@ class Jarvis(Assistant):
     @log_action
     def respond(self, message):
         self.memory.save_memory("user", message)
+        self.semantic.add(message)
+        context = self.semantic.search(message)
         history = self.memory.load_history() 
         response = self.core.think(message, history)
         self.memory.save_memory("jarvis", response)

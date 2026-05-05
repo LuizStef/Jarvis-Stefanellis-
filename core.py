@@ -12,19 +12,23 @@ class Core:
         You remember previous conversations and learn from them
         Always respond concisely and directly."""
         
-    def think(self, message, history=[]):
+    def think(self, message, history=[], context=[]):
+        messages = [{"role": "system", "content": self.__system_prompt}]
+        
+        if context:
+            context_text = "\n".join(context)
+            messages.append({
+                "role": "system",
+                "content": f"Relevant context from memory:\n{context_text}"
+            })
+        
+        for role, content, _ in history:
+            messages.append({"role": role, "content": content})
+        messages.append({"role": "user", "content": message})
+
         try:
-            messages = [{"role": "system", "content": self.__system_prompt}]
-            for role, content, _ in history:
-                messages.append({"role": role, "content": content})
-            messages.append({"role": "user", "content": message})
-        
-            response = ollama.chat(
-                model=self.__model,
-             messages=messages
-            )
-        
+            response = ollama.chat(model=self.__model, messages=messages)
             return response["message"]["content"]
-    
         except Exception as e:
-            raise JarvisOfflineError()
+            raise JarvisOfflineError() from e
+    
