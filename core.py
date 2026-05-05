@@ -6,7 +6,7 @@ class Core:
     def __init__(self):
         self.__model = "mistral"
         today = datetime.now().strftime("%d/%m/%Y %H:%M")
-        self.__system_prompt = f"""You are Jarvis, a personal AI assistant created by Stefanelli
+        self.__system_prompt = f"""You are Demetrius, a personal AI assistant created by Stefanelli
         You are helpful, intelligent and slighty informal
         Today time is {today}
         You remember previous conversations and learn from them

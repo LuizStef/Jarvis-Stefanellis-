@@ -51,3 +51,13 @@ class SmartMemory:
             return result[0] if result else None
         except:
             return None
+        
+    def load_user_messages(self):
+        history = self.load_history()
+        return [content for role, content, _ in history if role == "user"]
+    
+    def load_jarvis_messages(self):
+        history = self.load_history()
+        return [content for role, content, _ in history if role == "jarvis"]
+    
+    

@@ -12,7 +12,7 @@ def log_action(func):
 
 class Jarvis(Assistant):
     def __init__(self, username):
-        super().__init__("Jarvis", "0.1")
+        super().__init__("Demetrius", "1.2")
         self.__mood = "neutral"
         self.soul = Soul(username, "casual")
         self.memory = SmartMemory()
@@ -67,9 +67,16 @@ while True:
             
     elif message.lower() == "!mood":
         print(f"[System]: Current mood: {jarvis.get_mood()}")
-        
+    
+    elif message.lower() == "!stats":
+        user_msgs = jarvis.memory.load_user_messages()
+        jarvis_msgs = jarvis.memory.load_jarvis_messages()
+        print(f"[System]: You sent {len(user_msgs)} messages.")
+        print(f"[System]: Jarvis replied {len(jarvis_msgs)} times.")
+     
     else:
         try:
              jarvis.respond(message)
         except JarvisOfflineError:
             print(f"[Jarvis]: I'm offline. Please start Ollama and try again.")
+            
