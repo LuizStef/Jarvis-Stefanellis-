@@ -60,4 +60,14 @@ class SmartMemory:
         history = self.load_history()
         return [content for role, content, _ in history if role == "jarvis"]
     
-    
+    def stream_history(self):
+        """Yelds one message at a time instead of loading all at once"""
+        self.__cursor.execute("SELECT role, content, timestamp FROM messages ORDER BY id ASC")
+        for row in self.__cursor.fetchall():
+            yield row
+            
+    def stream_user_messages(self):
+        """Yields only user messages one at a time"""
+        for role, content, timestamp in self.stream_history():
+            if role == "user":
+                yield content

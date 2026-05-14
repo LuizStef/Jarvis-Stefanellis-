@@ -32,13 +32,13 @@ class Jarvis(Assistant):
     @log_action
     def respond(self, message):
         self.memory.save_memory("user", message)
+        history = list(self.memory.stream_history())  # generator → lista
         self.semantic.add(message)
         context = self.semantic.search(message)
-        history = self.memory.load_history() 
-        response = self.core.think(message, history)
+        response = self.core.think(message, history, context)
         self.memory.save_memory("jarvis", response)
         print(f"[{self.name}]: {response}")
-
+        
 memory = SmartMemory()
 username = memory.load_user()
 
