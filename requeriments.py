@@ -1,0 +1,4 @@
+ollama
+faiss-cpu
+sentence-transformers
+numpy

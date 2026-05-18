@@ -1,4 +1,4 @@
-# Project Demetrius
+# Demetrius
 
 Personal Offline AI Assistant designed to learn, adapt and evolve with its user.
 
@@ -11,77 +11,68 @@ Demetrius is a personal AI assistant built in Python, focused on:
 - Adapting to user preferences and reasoning
 - Maintaining privacy and full data control
 
-This project aims to create a long-term, evolving AI that becomes increasingly aligned with its user over time.
+## Requirements
 
-## Core Features
+- Python 3.10+
+- [Ollama](https://ollama.com) installed and running
+- Mistral model pulled: `ollama pull mistral`
 
-- Natural conversation
-- Personality adaptation (user-based)
-- Memory system (context + long-term)
-- Code assistance
-- Local automation
+## Installation
 
-## Memory System
+```bash
+git clone https://github.com/LuizStef/Project-Jarvis.git
+cd Project-Jarvis
+pip install -r requirements.txt
+```
 
-Demetrius uses a structured memory system:
+## Usage
 
-- Short-term memory → current context
-- Long-term memory → persistent knowledge
-- Semantic memory → meaning-based retrieval
+```bash
+ollama serve        # terminal 1
+python hearth.py    # terminal 2
+```
 
-## Decision System
+## Commands
 
-To ensure safety and control, Demetrius includes:
+| Command | Action |
+|---|---|
+| `exit` | Shutdown Demetrius |
+| `!clear` | Clear conversation history |
+| `!history` | Show conversation history |
+| `!mood` | Show current mood |
+| `!mood excited` | Change mood |
+| `!stats` | Show message statistics |
 
-- Risk-based action control
-- Permission handling
-- User confirmation for critical operations
+## Project Structure
 
-## Privacy & Security
 
-- Runs fully locally
-- No required external APIs
-- User data remains private
-- Optional encryption and logs
-
-## Backup
-
-- Local backup system
-- Designed for long-term persistence
-- User-controlled data recovery
-
-## Skills
-
-- Code generation & debugging
-- File management
-- System automation
+Demetrius/
+├── config.py           # Central configuration
+├── base.py             # Base Assistant class
+├── soul.py             # Personality and greetings
+├── smart_memory.py     # SQLite persistent memory
+├── semantic_memory.py  # FAISS semantic search
+├── core.py             # AI brain (Ollama + Mistral)
+├── demetrius.py        # Main Demetrius class
+├── hearth.py           # Boot and main loop
+├── exceptions.py       # Custom exceptions
+└── requirements.txt    # Dependencies
 
 ## Tech Stack
 
-- Python
+- Python 3.10+
 - SQLite
-- FAISS (semantic search)
-- Ollama + Mistral (local AI)
+- FAISS
+- Sentence Transformers
+- Ollama + Mistral
 
 ## Status
 
-In active development
+In active development.
 
 ## Vision
 
-To build a personal AI system that:
-
-- Learns continuously
-- Reflects the user's thinking
-- Remains private, lightweight, and independent
-
-## Future Ideas
-
-- Voice interaction (Whisper + pyttsx3)
-- Raspberry Pi integration
-- Modular plugin system
-- Advanced personalization
-- Multi-agent support
+To build a personal AI system that learns continuously, reflects the user's thinking, and remains private, lightweight, and independent.
 
 ## License
 
